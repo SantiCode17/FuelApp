@@ -1,0 +1,54 @@
+{
+  "expo": {
+    "name": "FuelApp",
+    "slug": "FuelApp",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/fuelapp-icon.png",
+    "userInterfaceStyle": "dark",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#010005"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "FuelApp necesita acceder a tu ubicación para mostrarte las gasolineras más cercanas y ayudarte a encontrar los mejores precios de combustible."
+      },
+      "backgroundColor": "#010005"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/fuelapp-icon.png",
+        "backgroundColor": "#FCE902"
+      },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ],
+      "config": {
+        "googleMaps": {
+          // Utilizo la API de Sebas, porque la mia no me funciona 
+          "apiKey": "AIzaSyAidPx2YBl-p-QzaHuqtJfUxetb1mAJc9c" 
+        }
+      }
+    },
+    "web": {
+      "favicon": "./assets/fuelapp-icon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "FuelApp necesita acceder a tu ubicación para mostrarte las gasolineras más cercanas y ayudarte a encontrar los mejores precios de combustible."
+        }
+      ]
+    ]
+  }
+}
