@@ -32,8 +32,7 @@
       ],
       "config": {
         "googleMaps": {
-          // Utilizo la API de Sebas, porque la mia no me funciona 
-          "apiKey": "AIzaSyAidPx2YBl-p-QzaHuqtJfUxetb1mAJc9c" 
+          "apiKey": "API-GOOGLE-MAPS" 
         }
       }
     },
