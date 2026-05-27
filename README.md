@@ -1,108 +1,106 @@
 # FuelApp
 
-Aplicación React Native con Expo para buscar estaciones de combustible en España, Francia y Portugal.
+A React Native + Expo app to find fuel stations and compare prices in Spain, France and Portugal.
 
-## 📱 Características
+![Expo](https://img.shields.io/badge/Expo-SDK-000020?logo=expo&logoColor=white)
+![React Native](https://img.shields.io/badge/React_Native-0.7x-61dafb?logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?logo=typescript&logoColor=white)
+![NativeWind](https://img.shields.io/badge/NativeWind-Tailwind-38bdf8?logo=tailwindcss&logoColor=white)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow)
 
-- **Listado de Provincias → Municipios → Estaciones**: Navegación jerárquica para encontrar estaciones
-- **Detalles de Estación**: Información completa incluyendo historial de precios de 30 días
-- **Mapa por Radio**: Busca estaciones cercanas a tu ubicación con radio personalizable
-- **Estaciones Cercanas**: Encuentra estaciones en un radio de 10km desde otra estación
+## Overview
 
-## 🛠️ Tecnologías
+Cross-platform mobile app that lets drivers browse fuel stations in Spain, France and Portugal by province, search around a custom radius on the map, or list stations near a chosen one. Built on top of the public [precioil](https://api.precioil.es/) API as the multimedia/mobile-development coursework for the DAM diploma.
 
-- **Expo Router** - Navegación
-- **NativeWind** - Estilos con Tailwind CSS
-- **TanStack Query** - Gestión de estado del servidor
-- **Zustand** - Gestión del estado global
-- **Axios** - Cliente HTTP
-- **expo-location** - Geolocalización
-- **react-native-maps** - Mapas de Google
+## Tech Stack
 
-## 📋 Requisitos
+- **Expo Router** — file-based navigation
+- **NativeWind** — Tailwind CSS for React Native
+- **TanStack React Query** — server-state management
+- **Zustand** — global state
+- **Axios** — HTTP client
+- **expo-location** — geolocation
+- **react-native-maps** — Google Maps integration
 
-- Node.js 18+
-- Expo CLI
-- API Key de Google Maps (para Android)
+## Features
 
-## 🚀 Instalación
+- Hierarchical browse: Province → Municipality → Station
+- Station detail screen with 30-day price history
+- Radius search on the map with adjustable distance
+- "Nearby stations" — find stations within 10 km of a chosen one
+- Cached server state with React Query
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js ≥ 18
+- Expo CLI (`npx expo`)
+- A Google Maps API key (required for the Android map view)
+
+### Installation
 
 ```bash
-# Instalar dependencias
+git clone https://github.com/SantiCode17/FuelApp.git
+cd FuelApp
 npm install
-
-# Iniciar en modo desarrollo
-npm start
 ```
 
-## ⚙️ Configuración
+### Configuration
 
-### Google Maps API Key (Android)
-
-1. Obtén una API Key en [Google Cloud Console](https://console.cloud.google.com/)
-2. Habilita la API de Google Maps para Android
-3. Actualiza `app.json`:
+Add your Google Maps API key in `app.json`:
 
 ```json
 "android": {
   "config": {
     "googleMaps": {
-      "apiKey": "TU_API_KEY_AQUI"
+      "apiKey": "YOUR_GOOGLE_MAPS_API_KEY"
     }
   }
 }
 ```
 
-## 📁 Estructura del Proyecto
+### Usage
+
+```bash
+npm start
+```
+
+Scan the QR with Expo Go or press `a` for an Android emulator.
+
+## Project Structure
 
 ```
 FuelApp/
-├── app/                        # Expo Router (Rutas y Pantallas)
-│   ├── _layout.tsx             # Configuración global
-│   ├── global.css              # Estilos globales
-│   ├── (stack)/                # Stack principal
-│   │   ├── (drawer)/           # Drawer
-│   │   │   ├── (tabs)/         # Tabs
-│   │   │   │   ├── stations/   # Tab 1: Listados
-│   │   │   │   ├── map/        # Tab 2: Mapa por radio
-│   │   │   │   └── nearby/     # Tab 3: Cerca de estación
-│   │   └── station/[id]        # Detalles de estación
-│
-├── components/                 # Componentes
-│   ├── shared/                 # Loader, ErrorView, Button...
-│   └── fuel/                   # StationCard, PriceList...
-│
-├── core/                       # Lógica de Negocio
-│   ├── api/                    # Configuración Axios
-│   ├── actions/                # Casos de uso
-│   └── utils/                  # Utilidades (fuel-types)
-│
-├── infrastructure/             # Adaptadores
-│   ├── interfaces/             # Tipos TypeScript
-│   └── mappers/                # Transformadores
-│
-└── presentation/               # Lógica de Vista
-    ├── hooks/                  # Custom Hooks (TanStack Query)
-    └── store/                  # Zustand (permisos)
+├── app/                  Expo Router (routes and screens)
+│   ├── (stack)/
+│   │   ├── (drawer)/
+│   │   │   └── (tabs)/   Stations · Radius map · Nearby
+│   │   └── station/[id]  Station detail
+├── components/           Shared UI + station components
+├── core/                 Business logic (Axios setup, use cases, utils)
+├── infrastructure/       Type interfaces and mappers
+└── presentation/         Hooks (React Query) + Zustand store
 ```
 
-## 🔗 API
+## API
 
-Utiliza la API de **precioil**: https://api.precioil.es/
+The app consumes the public [precioil](https://api.precioil.es/) API:
 
-### Endpoints utilizados:
+| Endpoint | Description |
+| --- | --- |
+| `/provincias` | List provinces |
+| `/municipios/provincia/:id` | Municipalities of a province |
+| `/estaciones/municipio/:id` | Stations of a municipality |
+| `/estaciones/detalles/:id` | Station details |
+| `/estaciones/historico/:id` | 30-day price history |
+| `/estaciones/radio` | Stations within a radius (paginated) |
+| `/estaciones/cerca/:id` | Stations near another station |
 
-| Endpoint | Descripción |
-|----------|-------------|
-| `/provincias` | Listado de provincias |
-| `/municipios/provincia/:id` | Municipios por provincia |
-| `/estaciones/municipio/:id` | Estaciones por municipio |
-| `/estaciones/detalles/:id` | Detalles de estación |
-| `/estaciones/historico/:id` | Historial de precios |
-| `/estaciones/radio` | Estaciones en un radio (con paginación) |
-| `/estaciones/cerca/:id` | Estaciones cercanas a otra estación |
+## License
 
-## 👨‍💻 Autor
+Released under the [MIT License](LICENSE). Originally developed as academic coursework for the Mobile Programming module at IES Salvador Gadea.
 
-Desarrollado por **SANTIAGO SANCHEZ MARCH** para la asignatura de Programación Multimedia y Dispositivos Móviles.
+## Author
 
+**Santiago Sánchez March** — [GitHub](https://github.com/SantiCode17) · [LinkedIn](https://www.linkedin.com/in/santiago-s%C3%A1nchez-march/)
